@@ -535,4 +535,4 @@ if __name__ == "__main__":
     MDPS = {layout_name: OvercookedGridworld.from_layout_name(layout_name=layout_name) for layout_name in ALL_LAYOUTS}
     # MLP = MediumLevelPlanner.from_pickle_or_compute(MDP, NO_COUNTERS_PARAMS, force_compute=False)
 
-    app.run(debug=True, host="0.0.0.0", port=ARGS.port, use_reloader=False)
+    app.run(debug=True, host="::", port=ARGS.port, use_reloader=False)
