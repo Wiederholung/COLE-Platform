@@ -66,7 +66,7 @@ parser.add_argument("--default", type=str, default= 0, help="default agent setti
 parser.add_argument("--port", type=int, default=8088, help="port to run flask")
 parser.add_argument("--seed", type=int, default=1, help="seed for model")
 parser.add_argument("--dummy", type=bool, default=False, help="demo dummy partner. Won't move.")
-parser.add_argument("--trajs_savepath", type=str, default=None, help="optional trajectory save path")
+parser.add_argument("--trajs_savepath", type=str, default='./trajs', help="optional trajectory save path")
 parser.add_argument(
     "--questionnaire_savepath", type=str, default="./questionnaire", help="optional questionnaire save path"
 )
