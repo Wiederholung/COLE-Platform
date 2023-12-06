@@ -244,17 +244,10 @@ export class OvercookedState {
 
 export function dictToState(state_dict) {
     let object_dict = {}
-    // if (state_dict['objects'].length > 0) {
-    //     state_dict['objects'].forEach(function (item, index) {
-    //         object_dict[item['position']] = dictToObjectState(item)
-    //     })
-    // }
-    if (JSON.stringify(state_dict['objects']) != '{}') {
-        // object_dict = state_dict['objects'];
-        for(var key in state_dict['objects']){
-          // console.log(state_dict, key)
-          object_dict[key] = dictToObjectState(state_dict['objects'][key])
-        }
+    if (state_dict['objects'].length > 0) {
+        state_dict['objects'].forEach(function (item, index) {
+            object_dict[item['position']] = dictToObjectState(item)
+        })
     }
     return new OvercookedState({
         players: [dictToPlayerState(state_dict['players'][0]), dictToPlayerState(state_dict['players'][1])],
@@ -373,51 +366,8 @@ export class OvercookedGridworld {
         probabilities.*/
         let action_sets = this.get_actions(state);
         for (let pi = 0; pi < state.players.length; pi++) {
-            let [player, act, action_set] =
+            let [player, action, action_set] =
                 [state.players[pi], joint_action[pi], action_sets[pi]];
-            // let action = action_d[act];
-            let action = act
-            assert(_.includes(action_set.map(String), String(action)))
-        }
-        let new_state = state.deepcopy();
-
-        assert(_.isEqual(new_state.objects, state.objects),
-            `${JSON.stringify(new_state.objects)} !== ${JSON.stringify(state.objects)}`);
-
-        //resolve interacts first
-        let reward = this.resolve_interacts(new_state, joint_action);
-
-        assert(_.isEqual(new_state.player_positions().map(String), state.player_positions().map(String)));
-        assert(_.isEqual(new_state.player_orientations().map(String), state.player_orientations().map(String)));
-
-
-        //resolve player movements
-        this.resolve_movement(new_state, joint_action);
-
-        //finally, environment effects
-        this.step_environment_effects(new_state);
-        return [[new_state, 1.0], reward]
-    }
-
-    get_transition_states_and_probs_for_replay({ state, joint_action }) {
-        /*Gets information about possible transitions for the action.
-        Returns list of (next_state, prob) pairs representing the states
-        reachable from 'state' by taking 'action' along with their transition
-        probabilities.*/
-        let action_d= {
-            4: [0, 0],
-            5: "INTERACT",
-            0: [0, -1],
-            3: [-1, 0],
-            1: [0, 1],
-            2: [1, 0]
-          };
-        let action_sets = this.get_actions(state);
-        for (let pi = 0; pi < state.players.length; pi++) {
-            let [player, act, action_set] =
-                [state.players[pi], joint_action[pi], action_sets[pi]];
-            let action = action_d[act];
-            // let action = act
             assert(_.includes(action_set.map(String), String(action)))
         }
         let new_state = state.deepcopy();
