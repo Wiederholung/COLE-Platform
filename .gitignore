@@ -10,6 +10,7 @@ trajs_data/
 backup/
 logs/
 models/*
+data/*
 *.ipynb
 *.zip
 
