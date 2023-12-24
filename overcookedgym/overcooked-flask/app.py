@@ -44,11 +44,13 @@ ALGO_P0, ALGO_P1 = None, None
 # "COLE" or "COLE_NOSP" are algorithms (Put models with same folder name into models/)
 # AGENT_SETTINGS = {"0": ("human", "COLE"), "1": ("human", "COLE_NOSP"), "2": ("COLE", "COLE_NOSP")}
 ALGO = "COLE"
-ALGO_BASELINES = ["SP", "PBT", "MEP", "FCP"]
+# ALGO_BASELINES = ["SP", "PBT", "MEP", "FCP"]
+ALGO_BASELINES = ["MEP", "FCP"]
 cur_algo_idx = -1
 # HUMAN_LIST = ["human"]
 
-ALL_LAYOUTS = ['simple', 'unident_s', 'random1', 'random0', 'random3']
+# ALL_LAYOUTS = ['simple', 'unident_s', 'random1', 'random0', 'random3']
+ALL_LAYOUTS = ['simple']
 
 AGENTS = {
     layout: dict() for layout in ALL_LAYOUTS
