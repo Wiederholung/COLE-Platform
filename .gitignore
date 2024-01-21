@@ -10,6 +10,7 @@ trajs_data/
 backup/
 logs/
 models/*
+data/*
 *.ipynb
 *.zip
 
@@ -18,6 +19,12 @@ __pycache__
 node_modules/
 not_used/
 overcookedgym/overcooked-flask/node_module
+overcookedgym/human_aware_rl/overcooked_ai/overcooked_ai_js/overcooked-window.js
+overcookedgym/human_aware_rl/overcooked_ai/overcooked_ai_js/overcooked.js
+overcookedgym/human_aware_rl/overcooked_ai/overcooked_ai_js/package-lock.json
+overcookedgym/overcooked-flask/package-lock.json
+overcookedgym/overcooked-flask/static/js/demo/demo.js
+overcookedgym/overcooked-flask/static/js/demo/replay.js
 yarn.lock
 *.npy
 data.zip
@@ -27,3 +34,8 @@ corridor_am.pkl
 
 .DS_Store
 .vscode
+.idea
+*.egg-info
+
+human_aware_rl/data/*
+human_aware_rl/log/*
