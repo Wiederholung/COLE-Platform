@@ -57,7 +57,7 @@ class PBTAgent(object):
 
     def update(self, gym_env, population=None, ent_version=1):
         with tf.device('/device:GPU:{}'.format(self.params["GPU_ID"])):
-            train_info = update_model(gym_env, self.model, population, ent_version, **self.params)
+            train_info = update_model(env=gym_env, model=self.model, population=population, ent_version=ent_version, **self.params)
 
             for k, v in train_info.items():
                 if k not in self.logs.keys():
