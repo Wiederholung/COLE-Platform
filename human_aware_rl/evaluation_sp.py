@@ -18,7 +18,7 @@ import os
 import ast
 import random
 import argparse
-PBT_DATA_DIR = "data/ppo_runs/"
+PPO_DATA_DIR = "data/ppo_runs/"
 # Visualization
 
 def plot_pbt_runs(pbt_model_paths, seeds, single=False, save=False, show=False):
@@ -54,7 +54,7 @@ def get_logs(save_dir, seeds, agent_array=None):
     Get training logs across seeds for all PBT runs. By default take the logs for
     agent0, but can specify custom agents through the `agent_array` parameter.
     """
-    save_dir = PBT_DATA_DIR + save_dir + "/"
+    save_dir = PPO_DATA_DIR + save_dir + "/"
     logs_across_seeds = []
     if agent_array is None:
         agent_array = [0] * len(seeds)
@@ -71,8 +71,8 @@ def get_pbt_agent_from_config(save_dir, name, seed, agent_idx=0, best=False):
         pos_names = sorted(pos_names)
         agent_to_load_path = agent_folder + "best"
     else:
-        if os.path.isfile(os.path.join(PBT_DATA_DIR, "best_info.txt")):
-            with open(os.path.join(PBT_DATA_DIR, "best_info.txt"), 'r') as f:
+        if os.path.isfile(os.path.join(PPO_DATA_DIR, "best_info.txt")):
+            with open(os.path.join(PPO_DATA_DIR, "best_info.txt"), 'r') as f:
                 data = f.readlines()[0]
                 data = ast.literal_eval(data)
             env = save_dir.split('/')[-1]
@@ -139,7 +139,7 @@ def evaluate_pbt_for_layout(layout_name, num_rounds, pbt_performance, pbt_model_
     bc_agent, bc_params = get_bc_agent_from_saved(model_name=best_test_bc_models[layout_name])
     #bc_agent_part, _ = get_part_bc_agent_from_saved(model_name=best_test_bc_models[layout_name])
     ae = AgentEvaluator(mdp_params=bc_params["mdp_params"], env_params=bc_params["env_params"])
-    pbt_save_dir = os.path.join(PBT_DATA_DIR, pbt_model_paths[layout_name][0])
+    pbt_save_dir = os.path.join(PPO_DATA_DIR, pbt_model_paths[layout_name][0])
     print(pbt_save_dir)
     pbt_config = load_dict_from_txt(os.path.join(pbt_save_dir, "config"))
     # bc_agent_random = RandomAgent(pbt_config["sim_threads"])
@@ -191,23 +191,23 @@ if __name__ == '__main__':
     print(args)
     num_rounds = args.num
     print(num_rounds)
-    pbt_model_paths = {
-        # "simple": "pbt_simple",
+    # pbt_model_paths = {
+    #     # "simple": "pbt_simple",
+    #     "unident_s": "ppo_sp_unident_s",
+    #     "random1": "ppo_sp_random1",
+    #     # "random0": "pbt_random0",
+    #     "random3": "ppo_sp_random3",
+    # }
+    ppo_model_paths = {
+        "simple": "ppo_sp_simple",
         "unident_s": "ppo_sp_unident_s",
         "random1": "ppo_sp_random1",
-        # "random0": "pbt_random0",
-        "random3": "ppo_sp_random3",
-    }
-    ppo_model_paths = {
-        # "simple": "pbt_simple",
-        # "unident_s": "ppo_sp_unident_s",
-        "random1": "ppo_sp_random1",
-        # "random0": "pbt_random0",
+        "random0": "ppo_sp_random0",
         "random3": "ppo_sp_random3",
     }
     model_paths_seeds = {}
-    for key, value in pbt_model_paths.items():
-        path = os.path.join("{}{}".format(PBT_DATA_DIR, value))
+    for key, value in ppo_model_paths.items():
+        path = os.path.join("{}{}".format(PPO_DATA_DIR, value))
         seeds = []
         if os.path.isdir(path):
             for seed in os.listdir(path):
@@ -221,5 +221,5 @@ if __name__ == '__main__':
     # Evaluating
     set_global_seed(512)
     pbt_performance = evaluate_all_sp_ppo_models(ppo_model_paths, best_bc_model_paths['test'], num_rounds, best=args.best, seeds=seeds)
-    save_dict_to_file(pbt_performance, PBT_DATA_DIR + "our_isbest(" + "{})".format(args.best))
+    save_dict_to_file(pbt_performance, PPO_DATA_DIR + "our_isbest(" + "{})".format(args.best))
 
